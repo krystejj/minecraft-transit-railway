@@ -14,33 +14,27 @@ import javax.annotation.Nonnull;
 
 public final class PacketRequestData extends PacketRequestResponseBase {
 
-	private final String tunnelUrl;
 
 	public PacketRequestData(PacketBufferReceiver packetBufferReceiver) {
 		super(packetBufferReceiver);
-		tunnelUrl = packetBufferReceiver.readString();
 	}
 
 	public PacketRequestData(DataRequest dataRequest) {
 		super(Utilities.getJsonObjectFromData(dataRequest).toString());
-		tunnelUrl = "";
 	}
 
 	private PacketRequestData(String content) {
 		super(content);
-		tunnelUrl = Init.getTunnelUrl();
 	}
 
 	@Override
 	public void write(PacketBufferSender packetBufferSender) {
 		super.write(packetBufferSender);
-		packetBufferSender.writeString(tunnelUrl);
 	}
 
 	@Override
 	protected void runClientInbound(Response response) {
 		response.getData(jsonReader -> new DataResponse(jsonReader, MinecraftClientData.getInstance())).write();
-		QrCodeHelper.INSTANCE.setServerTunnelUrl(tunnelUrl);
 	}
 
 	@Override

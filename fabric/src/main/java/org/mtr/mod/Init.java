@@ -25,7 +25,6 @@ import org.mtr.mod.config.Config;
 import org.mtr.mod.data.ArrivalsCacheServer;
 import org.mtr.mod.data.RailActionModule;
 import org.mtr.mod.packet.*;
-import org.mtr.mod.servlet.Tunnel;
 import org.mtr.mod.servlet.VehicleLiftServlet;
 
 import javax.annotation.Nullable;
@@ -38,7 +37,6 @@ public final class Init implements Utilities {
 
 	private static Main main;
 	private static Webserver webserver;
-	private static Tunnel tunnel;
 	private static int serverPort;
 	private static Runnable sendWorldTimeUpdate;
 	private static boolean canSendWorldTimeUpdate = true;
@@ -156,8 +154,6 @@ public final class Init implements Utilities {
 			Config.init(minecraftServer.getRunDirectory());
 			final int defaultPort = Config.getServer().getWebserverPort();
 			serverPort = findFreePort(defaultPort);
-			tunnel = new Tunnel(minecraftServer.getRunDirectory(), defaultPort, () -> {
-			});
 
 			final int port = findFreePort(serverPort + 1);
 			main = new Main(minecraftServer.getSavePath(WorldSavePath.getRootMapped()).resolve("mtr"), serverPort, port, WORLD_ID_LIST.toArray(new String[0]));
@@ -194,9 +190,6 @@ public final class Init implements Utilities {
 		});
 
 		REGISTRY.eventRegistry.registerServerStopping(minecraftServer -> {
-			if (tunnel != null) {
-				tunnel.stop();
-			}
 			if (main != null) {
 				main.stop();
 			}
@@ -258,10 +251,6 @@ public final class Init implements Utilities {
 	public static String getWorldId(World world) {
 		final Identifier identifier = MinecraftServerHelper.getWorldId(world);
 		return String.format("%s/%s", identifier.getNamespace(), identifier.getPath());
-	}
-
-	public static String getTunnelUrl() {
-		return tunnel.getTunnelUrl();
 	}
 
 	public static int findFreePort(int startingPort) {
