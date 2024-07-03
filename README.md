@@ -1,7 +1,12 @@
-# Minecraft Transit Railway 3.0
+# Minecraft Transit Railway 4.0.0
+
+![Latest Release](https://img.shields.io/github/v/release/krystejj/minecraft-transit-railway?include_prereleases&display_name=release&label=Latest%20Release)
 
 > [!NOTE]  
-> Fork with a few changes from me.
+> Fork of original [jonafanho's Minecraft Transit Railway](https://github.com/Minecraft-Transit-Railway/Minecraft-Transit-Railway) with a few changes from me:
+> - removed forge support,
+> - adapted for 1.20.1,
+> - removed tunnelmole features.
 
 _Minecraft Transit Railway_ is a [Minecraft mod](https://minecraft.gamepedia.com/Mods) based on Hong Kong's MTR, the London Underground, and the New York Subway. It adds trains into the game along with other miscellaneous blocks and items. With this mod, it is possible to build a fully functional railway system in your world!
 
